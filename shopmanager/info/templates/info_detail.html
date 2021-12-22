@@ -1,0 +1,14 @@
+{% extends 'info/main.html' %}
+
+{% block content %}
+
+{% for info in detailinfp %}
+
+<p>{{info.title}}</p>
+<p>{{info.image}}</p>
+<p>{{info.description}}</p>
+<p>{{info.date_of_pub}}</p>
+
+{% endfor %}
+
+{% endblock %}

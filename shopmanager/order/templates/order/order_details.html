@@ -1,0 +1,90 @@
+{% extends 'order/main.html' %}
+
+{% block title %}
+    Details {{ order.order_id }}
+{% endblock %}
+
+{% block content %}
+
+    <!-- messages -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+                    {% for message in messages %}
+                        {% if 'success' in message.tags %}
+                            <div class="alert alert-success" style="text-align:center" role="alert">
+                                {{ message }}
+                            </div>
+                        {% elif 'info' in message.tags %}
+                            <div class="alert alert-warning" style="text-align:center" role="alert">
+                                {{ message }}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-danger" style="text-align:center" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+    <!-- messages end -->
+
+    <!-- order table -->
+<div class="container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Товар</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Количество</th>
+              <th scope="col">Options</th>
+              <th scope="col">Вернуть товар</th>
+            </tr>
+        </thead>
+        {% for product in order_items %}
+        <tbody>
+            <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ product.get_item_name }}</td>
+            <td>{{ product.get_item_price }}</td>
+            <td>{{ product.quantity }}</td>
+            <td>
+                <a href="{% url 'increase_quantity' product.id order.id %}" class="fas fa-plus"></a>
+                <a href="{% url 'reduce_quantity' product.id order.id%}" class="fas fa-minus"></a>
+            </td>
+            <td valign="center"><a href="{% url 'remove_from_order' product.id order.id %}" class="fas fa-recycle"></a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <!-- order table end -->
+
+    {% if order.close_status == False %}
+    <!-- order menu -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+            </div>
+            <div class="col-sm">
+
+
+                <div class="alert alert-dark" style="text-align:center" role="alert">
+                    <a href="{% url 'seller_index' %}">Назад</a>
+                </div>
+            </div>
+            <div class="col-sm">
+            </div>
+        </div>
+    </div>
+
+    <!-- order menu end -->
+    {% endif %}
+
+{% endblock %}

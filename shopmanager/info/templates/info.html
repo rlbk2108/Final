@@ -1,0 +1,11 @@
+{% extends 'info/main.html' %}
+
+{% block content %}
+
+{% for info in infomation %}
+
+<a href="{% url 'info_detail' info.id  %}"></a>
+
+{% endfor %}
+
+{% endblock %}
